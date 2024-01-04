@@ -25,4 +25,4 @@ COPY ${JAR_FILE} app.jar
 EXPOSE ${SERVER_PORT}
 
 # [Entry point]
-#ENTRYPOINT ["java","-jar","-Djava.security.egd=file:/dev/./urandom","app.jar"]
+ENTRYPOINT ["java","-jar","-Djava.security.egd=file:/dev/./urandom","app.jar"]

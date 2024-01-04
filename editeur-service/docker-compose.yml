@@ -7,9 +7,18 @@ services:
     ports:
       - "27017:27017"
     environment:
-      MONGO_INITDB_DATABASE: equipment_service_db
+      MONGO_INITDB_DATABASE: editeur_service_db
     volumes:
       - db:/data/db/
+  web:
+    image: mon-backend-image:latest
+    container_name: mon-backend-container
+    ports:
+      - "3000:3000"
+    environment:
+      //- URL_MONGO:
+    depends_on:
+      - mongo
 
 volumes:
   db:
