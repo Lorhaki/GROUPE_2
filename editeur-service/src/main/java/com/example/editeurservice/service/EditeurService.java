@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 @RequiredArgsConstructor
 public class EditeurService {
@@ -22,7 +24,7 @@ public class EditeurService {
         final Editeur editeur = Editeur.builder()
                 .nom(request.getNom())
                 .description(request.getDescription())
-                .Ljv(request.getLjv())
+                .Ljv(new ArrayList<>())
                 .build();
 
         return editeurRepository.insert(editeur);

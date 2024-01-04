@@ -19,7 +19,4 @@ public class EditeurCreationRequest {
 
     private String description ;
 
-    private ArrayList<String> Ljv ;
-
-
 }
