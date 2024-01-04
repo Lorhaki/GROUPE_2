@@ -3,6 +3,7 @@ package com.example.editeurservice.controller;
 import com.example.editeurservice.api.dto.EditeurDto;
 import com.example.editeurservice.api.request.EditeurCreationRequest;
 import com.example.editeurservice.api.request.EditeurUpdateRequest;
+import com.example.editeurservice.api.response.EditeurResponse;
 import com.example.editeurservice.entity.Editeur;
 import com.example.editeurservice.mapper.EditeurMapper;
 import com.example.editeurservice.service.EditeurService;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/editeurs")
@@ -156,5 +159,23 @@ public class EditeurController {
             @PathVariable String editeurId){
         editeurService.delete(editeurId);
         return ResponseEntity.accepted().build();
+    }
+
+    @Operation(
+            summary = "Permet d'obtenir l'ensemble des éditeurs",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Response in case of success",
+                            content = @Content(mediaType = "application/json", schema = @Schema(allOf = EditeurResponse.class))
+                    ),
+            }
+    )
+    @GetMapping
+    public ResponseEntity<EditeurResponse> getAllEditeurs(){
+        final List<Editeur> editeurs = editeurService.getAll();
+        final EditeurResponse response = editeurMapper.toResponse(editeurs);
+
+        return ResponseEntity.ok(response);
     }
 }

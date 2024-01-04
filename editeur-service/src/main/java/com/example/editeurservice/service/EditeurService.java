@@ -9,6 +9,7 @@ import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,9 @@ public class EditeurService {
                 .orElse(null);
     }
 
+    public List<Editeur> getAll(){
+        return editeurRepository.findAll();
+    }
     public Editeur create(EditeurCreationRequest request){
         final Editeur editeur = Editeur.builder()
                 .nom(request.getNom())
