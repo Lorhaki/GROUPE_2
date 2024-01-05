@@ -1,24 +1,26 @@
 version: '3'
 
 services:
-  mongo:
+  mongodb:
     image: mongo:4.4
     restart: on-failure
+    container_name: mongo
     ports:
       - "27017:27017"
     environment:
       MONGO_INITDB_DATABASE: editeur_service_db
     volumes:
       - db:/data/db/
-  web:
-    image: mon-backend-image:latest
-    container_name: mon-backend-container
+      - ./docker/mongoData:/data/db/
+
+  ms-editeur:
+    build:
+      context: ./editeur-service
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
-    environment:
-      //- URL_MONGO:
+      - "8080:8080"
     depends_on:
-      - mongo
+      - mongodb
 
 volumes:
   db:
