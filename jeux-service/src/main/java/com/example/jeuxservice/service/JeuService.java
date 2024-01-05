@@ -12,14 +12,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class JeuService {
     private final JeuxRepository jeuxRepository;
-
-
+    @Autowired
     private final WebClient.Builder webClient ;
 
     public Jeux getById(String jeuxId){
@@ -29,15 +30,16 @@ public class JeuService {
 
 
     public List<EditeurResponse> getListeEditeurs(){
-        return webClient.baseUrl("http://localhost:8080/")
+        List<EditeurResponse>liste = webClient.baseUrl("http://localhost:8080/")
                 .build()
                 .get()
-                .uri("editeurs/getAllEditeurs")
+                .uri("editeurs")
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToFlux(EditeurResponse.class)
                 .collectList()
                 .block();
+        return liste;
     }
     public EditeurResponse trouver(String nom){
         List<EditeurResponse> liste = getListeEditeurs();

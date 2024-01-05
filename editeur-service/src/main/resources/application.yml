@@ -14,6 +14,6 @@ springdoc:
 spring:
   data:
     mongodb:
-      uri: ${DB_URL:mongodb://mongo:27017/}
+      uri: ${DB_URL:mongodb://localhost:27017/}
       database: ${DB_NAME:editeur_service_db}
       auto-index-creation: true

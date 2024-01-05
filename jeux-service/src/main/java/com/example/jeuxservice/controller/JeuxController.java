@@ -56,10 +56,11 @@ public class JeuxController {
         final Jeux jeux = jeuService.create(request);
         final JeuxDto dto = jeuxMapper.toDto(jeux);
 
-
          if (jeuService.trouver(request.getNomEdi()) == null){
                 creatEditeur(request.getNomEdi(),"");
          }
+
+
 
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
