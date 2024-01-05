@@ -2,18 +2,18 @@ version: '3'
 
 services:
   mongodb:
-    image: mongo:4.4
+    image: mongo:latest
     restart: on-failure
-    container_name: mongo
+    container_name: mongodb
     ports:
       - "27017:27017"
     environment:
       MONGO_INITDB_DATABASE: editeur_service_db
     volumes:
-      - db:/data/db/
-      - ./docker/mongoData:/data/db/
+      - db_editeur:/data/db_editeur
 
   ms-editeur:
+    container_name: ms_editeur
     build:
       context: ./editeur-service
       dockerfile: Dockerfile
@@ -22,5 +22,15 @@ services:
     depends_on:
       - mongodb
 
+  ms-jeux:
+    container_name: ms_jeux
+    build:
+      context: ./jeux-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongodb
+
 volumes:
-  db:
+  db_editeur:

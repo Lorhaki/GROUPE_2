@@ -14,6 +14,6 @@ springdoc:
 spring:
   data:
     mongodb:
-      uri: ${DB_URL:mongodb://localhost:27017}
-      database: ${DB_NAME:jeux_service_db}
-      auto-index-creation: true
+      host: mongodb
+      port: 27017
+      database: db_editeur

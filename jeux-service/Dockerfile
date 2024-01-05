@@ -5,12 +5,12 @@ LABEL maintainer="Loic et Adrien"
 LABEL description="editeur service du groupe 2"
 
 #[Variable d'environment]
-ENV SERVER_PORT=8080
+ENV SERVER_PORT=8081
 ENV DBHOST=mongodb
 
 
 #[Arguments]
-ARG JAR_FILE=target/editeur-service-*.jar
+ARG JAR_FILE=target/jeux-service-*.jar
 
 #[User]
 #RUN addgroup --system user \
