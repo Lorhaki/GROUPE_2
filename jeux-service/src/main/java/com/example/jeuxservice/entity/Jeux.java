@@ -17,5 +17,6 @@ public class Jeux {
     @Id
     private ObjectId id;
     private String nom;
-    private ObjectId idAditeur;
+
+    private String idEditeur;
 }
