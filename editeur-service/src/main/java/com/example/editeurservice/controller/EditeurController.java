@@ -45,8 +45,8 @@ public class EditeurController {
     /*CREATE*/
     @PostMapping
     @Operation(
-            summary = "Create an equipment",
-            description = "Create an equipment from the provided data.",
+            summary = "Creer un editeur",
+            description = "permet de creer un editeur Si doublon dans la base (meme nom) renvoir erreur 500",
             responses = {
                     @ApiResponse(
                             responseCode = "201",
@@ -56,6 +56,11 @@ public class EditeurController {
                     @ApiResponse(
                             responseCode = "400",
                             description = "Response if the provided data is not valid",
+                            content = @Content(mediaType = "application/json")
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "L'utilisateur existe deja dans la BDD ou bien l'entrée n'est pas bonne",
                             content = @Content(mediaType = "application/json")
                     )
             }
@@ -92,6 +97,34 @@ public class EditeurController {
 
     ){
         final Editeur editeur = editeurService.getById(editeurId);
+
+        return editeur != null
+                ? ResponseEntity.ok(editeurMapper.toDto(editeur))
+                : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/byNom/{editeurNom}")
+    @Operation(
+            summary = "Trouver un éditeur avec son nom",
+            description = "Get the equipment with the provided NOM.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Response in case of success",
+                            content = @Content(mediaType = "application/json", schema = @Schema(allOf = EditeurDto.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No editeur is matching the provided NOM"
+                    )
+            }
+    )
+    public ResponseEntity<EditeurDto> getByNom(
+            @Parameter(description = "Nom de l'éditeur" , example = "Nintendo")
+            @PathVariable
+            String editeurNom
+    ){
+        final Editeur editeur = editeurService.getByNom(editeurNom);
 
         return editeur != null
                 ? ResponseEntity.ok(editeurMapper.toDto(editeur))

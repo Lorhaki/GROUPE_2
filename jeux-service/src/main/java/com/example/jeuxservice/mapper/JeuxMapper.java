@@ -16,7 +16,7 @@ public class JeuxMapper {
         return JeuxDto.builder()
                 .id(jeu.getId().toHexString())
                 .nom(jeu.getNom())
-                .idEditeur(jeu.getIdEditeur())
+                .nomEdi(jeu.getNomEdi())
                 .build();
     }
 

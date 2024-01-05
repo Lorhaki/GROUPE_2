@@ -1,6 +1,7 @@
 package com.example.jeuxservice.controller;
 
 import com.example.jeuxservice.api.dto.JeuxDto;
+import com.example.jeuxservice.api.request.EditeurCreationRequest;
 import com.example.jeuxservice.api.request.JeuxCreationRequest;
 import com.example.jeuxservice.api.response.JeuxResponse;
 import com.example.jeuxservice.entity.Jeux;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -32,6 +34,7 @@ import java.util.List;
 public class JeuxController {
     private final JeuService jeuService;
     private final JeuxMapper jeuxMapper;
+    private RestTemplate restTemplate;
     @PostMapping
     @Operation(
             summary = "Permet de creer un jeux vidéo",
@@ -53,7 +56,23 @@ public class JeuxController {
         final Jeux jeux = jeuService.create(request);
         final JeuxDto dto = jeuxMapper.toDto(jeux);
 
+
+         if (jeuService.trouver(request.getNomEdi()) == null){
+                creatEditeur(request.getNomEdi(),"");
+         }
+
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+    }
+
+    private void creatEditeur(String nomEditeur, String description){
+
+        String editeurApiUrl = "http://localhost:8080/editeurs";
+
+        EditeurCreationRequest editeurRequest = new EditeurCreationRequest();
+        editeurRequest.setDescription(description);
+        editeurRequest.setNom(nomEditeur);
+
+        restTemplate.postForEntity(editeurApiUrl,editeurRequest, Void.class);
     }
 
     @GetMapping("/{JeuxId}")
@@ -95,7 +114,7 @@ public class JeuxController {
             }
     )
     @GetMapping
-    public ResponseEntity<JeuxResponse> getAllEditeurs(){
+    public ResponseEntity<JeuxResponse> getAllJeux(){
         final List<Jeux> jeux = jeuService.getAll();
         final JeuxResponse response = jeuxMapper.toResponse(jeux);
 

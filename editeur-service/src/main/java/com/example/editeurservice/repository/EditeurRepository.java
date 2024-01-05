@@ -12,7 +12,7 @@ import java.util.List;
 @RepositoryRestResource(exported = false)
 public interface EditeurRepository extends MongoRepository<Editeur, ObjectId> {
 
-    List<Editeur> findAllByNom(String nom);
+    Editeur findByNom(String nom);
     List<Editeur> findAllById(ObjectId id);
 
 }

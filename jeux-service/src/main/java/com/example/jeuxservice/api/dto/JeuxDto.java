@@ -22,8 +22,8 @@ public class JeuxDto {
     private String nom;
 
     @Schema(
-            description = "Correspond à l'id de l'entrerpsie",
+            description = "Correspond au nom de l'entrerpsie",
             example = "sdhsfb7214"
     )
-    private String idEditeur;
+    private String nomEdi;
 }

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,9 @@ import java.util.List;
 public class EditeurService {
     private final EditeurRepository editeurRepository;
 
+    public Editeur getByNom(String editeurNom){
+        return editeurRepository.findByNom(editeurNom);
+    }
     public Editeur getById(String editeurId){
         return editeurRepository.findById(new ObjectId(editeurId))
                 .orElse(null);
@@ -25,13 +29,22 @@ public class EditeurService {
         return editeurRepository.findAll();
     }
     public Editeur create(EditeurCreationRequest request){
-        final Editeur editeur = Editeur.builder()
-                .nom(request.getNom())
-                .description(request.getDescription())
-                .Ljv(new ArrayList<>())
-                .build();
+        List<Editeur> temp  = editeurRepository.findAll();
+        Boolean b = false ;
+        for(int i = 0 ; i < temp.size() ; i++){
+            if (temp.get(i).getNom().equals(request.getNom())){
+             b = true ;
+            }
+        }
+        if (b == false) {
+            final Editeur editeur = Editeur.builder()
+                    .nom(request.getNom())
+                    .description(request.getDescription())
+                    .Ljv(new ArrayList<>())
+                    .build();
 
-        return editeurRepository.insert(editeur);
+            return editeurRepository.insert(editeur);
+        } return null ;
     }
 
     public Editeur update(String editeurId, EditeurUpdateRequest request){
