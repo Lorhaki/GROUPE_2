@@ -30,7 +30,7 @@ public class JeuService {
 
 
     public List<EditeurResponse> getListeEditeurs(){
-        List<EditeurResponse>liste = webClient.baseUrl("http://localhost:8080/")
+        List<EditeurResponse>liste = webClient.baseUrl("http://editeurs:8080/")
                 .build()
                 .get()
                 .uri("editeurs")
@@ -43,9 +43,10 @@ public class JeuService {
     }
     public EditeurResponse trouver(String nom){
         List<EditeurResponse> liste = getListeEditeurs();
+
         for(int i=0; i<liste.size(); i++)
         {
-            if(liste.get(i).getEditeurs().getNom().equals(nom))
+            if(liste.get(i).getEditeurs().getNom() == nom)
             {
                 return liste.get(i);
             }

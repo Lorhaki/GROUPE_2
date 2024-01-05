@@ -3,6 +3,7 @@ package com.example.jeuxservice.controller;
 import com.example.jeuxservice.api.dto.JeuxDto;
 import com.example.jeuxservice.api.request.EditeurCreationRequest;
 import com.example.jeuxservice.api.request.JeuxCreationRequest;
+import com.example.jeuxservice.api.response.EditeurResponse;
 import com.example.jeuxservice.api.response.JeuxResponse;
 import com.example.jeuxservice.entity.Jeux;
 import com.example.jeuxservice.mapper.JeuxMapper;
@@ -67,7 +68,7 @@ public class JeuxController {
 
     private void creatEditeur(String nomEditeur, String description){
 
-        String editeurApiUrl = "http://localhost:8080/editeurs";
+        String editeurApiUrl = "http://editeurs:8080/editeurs";
 
         EditeurCreationRequest editeurRequest = new EditeurCreationRequest();
         editeurRequest.setDescription(description);
@@ -121,4 +122,5 @@ public class JeuxController {
 
         return ResponseEntity.ok(response);
     }
+
 }
