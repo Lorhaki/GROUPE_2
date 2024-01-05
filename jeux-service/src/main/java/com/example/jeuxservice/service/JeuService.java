@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class JeuService {
@@ -28,4 +30,6 @@ public class JeuService {
 
         return jeuxRepository.insert(jeux);
     }
+
+    public List<Jeux> getAll(){return jeuxRepository.findAll();}
 }

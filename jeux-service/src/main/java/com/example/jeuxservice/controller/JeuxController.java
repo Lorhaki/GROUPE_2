@@ -2,6 +2,7 @@ package com.example.jeuxservice.controller;
 
 import com.example.jeuxservice.api.dto.JeuxDto;
 import com.example.jeuxservice.api.request.JeuxCreationRequest;
+import com.example.jeuxservice.api.response.JeuxResponse;
 import com.example.jeuxservice.entity.Jeux;
 import com.example.jeuxservice.mapper.JeuxMapper;
 import com.example.jeuxservice.service.JeuService;
@@ -17,6 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/jeux")
 @Slf4j
@@ -78,5 +82,23 @@ public class JeuxController {
         return jeux != null
                 ? ResponseEntity.ok(jeuxMapper.toDto(jeux))
                 : ResponseEntity.notFound().build();
+    }
+
+    @Operation(
+            summary = "Permet d'obtenir l'ensemble des JeuxVidéos",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Response in case of success",
+                            content = @Content(mediaType = "application/json", schema = @Schema(allOf = JeuxResponse.class))
+                    ),
+            }
+    )
+    @GetMapping
+    public ResponseEntity<JeuxResponse> getAllEditeurs(){
+        final List<Jeux> jeux = jeuService.getAll();
+        final JeuxResponse response = jeuxMapper.toResponse(jeux);
+
+        return ResponseEntity.ok(response);
     }
 }
