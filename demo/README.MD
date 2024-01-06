@@ -63,3 +63,7 @@ Les indications données précédemment permettent de créer des conteneurs pour
 Cependant, il est possible de tester de run les 2 services. Pour cela, il faut tout d'abord lancer une base de donnée MongoDB en docker connecté sur le port 27017. 
 Dans le code, allez dans jeux-service/src/main/java/service/JeuService.java, décommentez les lignes 46 et 60 puis mettez en commentaires les lignes 47 et 59.
 Ensuite, il suffit de run les services puis de passer aux étapes de parcours expliquer précédemment. 
+
+## Ce qu'il nous manque
+Nous n'avons plus retrouver comment utiliser git action et nous avions peur que notre programme ne fonctionn plus si nous le mettions mal en place.
+Le reste devriat être effectif bien qu'il manquerait quelques gestions d'erreurs pour être plus clair.
