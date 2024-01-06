@@ -1,11 +1,12 @@
 package com.example.jeuxservice.controller;
 
-import com.example.jeuxservice.api.dto.EditeurDto;
 import com.example.jeuxservice.api.dto.JeuxDto;
 import com.example.jeuxservice.api.request.EditeurCreationRequest;
 import com.example.jeuxservice.api.request.JeuxCreationRequest;
+import com.example.jeuxservice.api.response.JeuxCreationResponse;
 import com.example.jeuxservice.api.response.EditeurResponse;
 import com.example.jeuxservice.api.response.JeuxResponse;
+import com.example.jeuxservice.communs.HttpErreurFonctionnelle;
 import com.example.jeuxservice.entity.Jeux;
 import com.example.jeuxservice.mapper.JeuxMapper;
 import com.example.jeuxservice.service.JeuService;
@@ -53,17 +54,21 @@ public class JeuxController {
                     )
             }
     )
-    public ResponseEntity<JeuxDto> createJeux(@Valid @RequestBody JeuxCreationRequest request)
+    public ResponseEntity createJeux(@Valid @RequestBody JeuxCreationRequest request)
     {
-        final Jeux jeux = jeuService.create(request);
-        final JeuxDto dto = jeuxMapper.toDto(jeux);
+        try{
+            final Jeux jeux = jeuService.create(request);
+            final JeuxDto dto = jeuxMapper.toDto(jeux);
 
-        EditeurCreationRequest e = new EditeurCreationRequest(request.getNomEdi(), "");
-        jeuService.appelPostALAutreApiPost(e);
+            EditeurCreationRequest e = new EditeurCreationRequest(request.getNomEdi(), "");
+            jeuService.appelPostALAutreApiPost(e);
 
+            return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+        } catch (Exception e){
 
+            return verifNom(request);
+        }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
     /*private void creatEditeur(String nomEditeur, String description){
@@ -138,5 +143,22 @@ public class JeuxController {
 
        return jeuService.getAllEdi();
     }
+
+    public ResponseEntity verifNom(JeuxCreationRequest request)
+    {
+        List<Jeux> liste = jeuService.getByNom(request.getNom());
+        for (Jeux j:
+                liste) {
+            if(j.getNomEdi().equals(request.getNomEdi()))
+            {
+                return ResponseEntity.ok(jeuxMapper.editeurCreationResponse(j));
+            }
+
+        }
+        return ResponseEntity
+                .badRequest()
+                .body(HttpErreurFonctionnelle.builder().message("Le jeu"+request.getNom()+ " n'a pas été créé avec l'éditeur "+request.getNomEdi()+" qui existait déjà").build());
+    }
+
 
 }

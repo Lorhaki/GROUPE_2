@@ -62,35 +62,7 @@ public class JeuService {
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(apiUrl, String.class);
         return responseEntity;
     }
-    /*
-    public List<EditeurResponse> getListeEditeurs(){
-         List<EditeurResponse> liste = webClient.baseUrl("http://localhost:8080/")
-                .build()
-                .get()
-                .uri("editeurs")
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .bodyToFlux(EditeurResponse.class)
-                .collectList()
-                .block();
 
-         return liste;
-    }
-
-    public EditeurResponse trouver(String nom){
-        List<EditeurResponse> liste = getListeEditeurs();
-
-        for(int i=0; i<liste.size(); i++)
-        {
-            String s = liste.get(i).getEditeurs().getNom();
-            if(s.equals(nom))
-            {
-                return liste.get(i);
-            }
-        }
-        return null;
-    }
-*/
     public Jeux create(JeuxCreationRequest request){
 
         final Jeux jeux = Jeux.builder()
@@ -101,5 +73,12 @@ public class JeuService {
         return jeuxRepository.insert(jeux);
     }
 
+    public List<Jeux> getByNom(String nom)
+    {
+        return jeuxRepository.findByNom(nom);
+    }
+
     public List<Jeux> getAll(){return jeuxRepository.findAll();}
+
+
 }

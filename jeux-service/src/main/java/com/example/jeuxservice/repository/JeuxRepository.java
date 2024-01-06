@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 @RepositoryRestResource(exported = false)
 public interface JeuxRepository extends MongoRepository<Jeux, ObjectId> {
-    List<Jeux> findAllByNom(String nom);
+    List<Jeux> findByNom(String nom);
     List<Jeux> findAllById(ObjectId id);
 
 }

@@ -1,12 +1,13 @@
 package com.example.jeuxservice.mapper;
 
 import com.example.jeuxservice.api.dto.JeuxDto;
+import com.example.jeuxservice.api.response.JeuxCreationResponse;
+import com.example.jeuxservice.api.response.EditeurResponse;
 import com.example.jeuxservice.api.response.JeuxResponse;
 import com.example.jeuxservice.entity.Jeux;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class JeuxMapper {
@@ -28,5 +29,14 @@ public class JeuxMapper {
         return JeuxResponse.builder()
                 .jeux(dtos)
                 .build();
+    }
+
+    public JeuxCreationResponse editeurCreationResponse(Jeux jeux)
+    {
+        return JeuxCreationResponse.builder()
+                .nom(jeux.getNom())
+                .nomEdi(jeux.getNomEdi())
+                .id(jeux.getId().toHexString())
+                .message("L'eiteur existait déjà, un nouveau jeu a été créé mais pas de nouvel editeur").build();
     }
 }
