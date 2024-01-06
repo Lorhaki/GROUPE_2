@@ -14,6 +14,6 @@ springdoc:
 spring:
   data:
     mongodb:
-      host: ${DBHOST:localhost}
+      host: ${BDD:localhost}
       port: 27017
       database: db_editeur

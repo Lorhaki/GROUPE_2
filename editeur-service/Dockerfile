@@ -6,7 +6,7 @@ LABEL description="editeur service du groupe 2"
 
 #[Variable d'environment]
 ENV SERVER_PORT=8080
-ENV DBHOST=mongodb
+ENV BDD=mongodb
 
 
 #[Arguments]

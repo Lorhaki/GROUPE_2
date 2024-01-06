@@ -2,11 +2,11 @@ FROM openjdk:21
 
 #[labels]
 LABEL maintainer="Loic et Adrien"
-LABEL description="editeur service du groupe 2"
+LABEL description="jeux service du groupe 2"
 
 #[Variable d'environment]
 ENV SERVER_PORT=8081
-ENV DBHOST=mongodb
+ENV BDD=mongodb
 
 
 #[Arguments]

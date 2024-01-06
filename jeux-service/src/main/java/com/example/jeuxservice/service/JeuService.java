@@ -43,9 +43,12 @@ public class JeuService {
         // Création du RestTemplate
         RestTemplate restTemplate = new RestTemplate();
 
+        //String url = "http://localhost:8080/editeurs";
+        String url = "http://ms-editeur:8080/editeurs";
+
         // Envoi de la requête POST à l'autre API
         ResponseEntity<String> responseEntity = restTemplate.exchange(
-                "http://localhost:8080/editeurs",
+                url,
                 HttpMethod.POST,
                 requestEntity,
                 String.class
@@ -53,7 +56,8 @@ public class JeuService {
     }
 
     public ResponseEntity<String> getAllEdi(){
-        String apiUrl =  "http://localhost:8080/editeurs" ;
+        String apiUrl = "http://ms-editeur:8080/editeurs";
+        //String apiUrl =  "http://localhost:8080/editeurs" ;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(apiUrl, String.class);
         return responseEntity;

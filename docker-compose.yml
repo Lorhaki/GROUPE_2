@@ -31,6 +31,7 @@ services:
       - "8081:8081"
     depends_on:
       - mongodb
+      - ms-editeur
 
 volumes:
   db_editeur:
