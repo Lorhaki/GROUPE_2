@@ -4,6 +4,7 @@ import com.example.editeurservice.api.dto.EditeurDto;
 import com.example.editeurservice.api.request.EditeurCreationRequest;
 import com.example.editeurservice.api.request.EditeurUpdateRequest;
 import com.example.editeurservice.api.response.EditeurResponse;
+import com.example.editeurservice.communs.HttpErreurFonctionnelle;
 import com.example.editeurservice.entity.Editeur;
 import com.example.editeurservice.mapper.EditeurMapper;
 import com.example.editeurservice.service.EditeurService;
@@ -65,11 +66,18 @@ public class EditeurController {
                     )
             }
     )
-    public ResponseEntity<EditeurDto> createEditeur(@Valid @RequestBody EditeurCreationRequest request) {
-        final Editeur editeur = editeurService.create(request);
-        final EditeurDto dto = editeurMapper.toDto(editeur);
+    public ResponseEntity createEditeur(@Valid @RequestBody EditeurCreationRequest request) {
+        try{
+            final Editeur editeur = editeurService.create(request);
+            final EditeurDto dto = editeurMapper.toDto(editeur);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+        }catch (Exception e){
+            return ResponseEntity
+                    .badRequest()
+                    .body(HttpErreurFonctionnelle.builder().message("Ce nom est déjà utilisé par un éditeur").build());
+        }
+
 
     }
 

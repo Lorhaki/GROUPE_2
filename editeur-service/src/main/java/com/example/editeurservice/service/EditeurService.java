@@ -30,13 +30,14 @@ public class EditeurService {
     }
     public Editeur create(EditeurCreationRequest request){
         List<Editeur> temp  = editeurRepository.findAll();
-        Boolean b = false ;
-        for(int i = 0 ; i < temp.size() ; i++){
-            if (temp.get(i).getNom().equals(request.getNom())){
-             b = true ;
+        boolean b = false ;
+        for (Editeur value : temp) {
+            if (value.getNom().equals(request.getNom())) {
+                b = true;
+                break;
             }
         }
-        if (b == false) {
+        if (!b) {
             final Editeur editeur = Editeur.builder()
                     .nom(request.getNom())
                     .description(request.getDescription())
@@ -45,6 +46,7 @@ public class EditeurService {
 
             return editeurRepository.insert(editeur);
         } return null ;
+
     }
 
     public Editeur update(String editeurId, EditeurUpdateRequest request){
