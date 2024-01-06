@@ -1,5 +1,6 @@
 package com.example.jeuxservice.controller;
 
+import com.example.jeuxservice.api.dto.EditeurDto;
 import com.example.jeuxservice.api.dto.JeuxDto;
 import com.example.jeuxservice.api.request.EditeurCreationRequest;
 import com.example.jeuxservice.api.request.JeuxCreationRequest;
@@ -42,12 +43,12 @@ public class JeuxController {
             responses = {
                     @ApiResponse(
                             responseCode = "201",
-                            description = "Response if the jeux has been successfully created",
+                            description = "Le jeux vidé à bien été créé",
                             content = @Content(mediaType = "application/json", schema = @Schema(allOf = JeuxDto.class))
                     ),
                     @ApiResponse(
                             responseCode = "400",
-                            description = "Response if the provided data is not valid",
+                            description = "Imposssbile de crrer le jeux mauvaise entrée",
                             content = @Content(mediaType = "application/json")
                     )
             }
@@ -57,16 +58,15 @@ public class JeuxController {
         final Jeux jeux = jeuService.create(request);
         final JeuxDto dto = jeuxMapper.toDto(jeux);
 
-         if (jeuService.trouver(request.getNomEdi()) == null){
-                creatEditeur(request.getNomEdi(),"");
-         }
+        EditeurCreationRequest e = new EditeurCreationRequest(request.getNomEdi(), "");
+        jeuService.appelPostALAutreApiPost(e);
 
 
 
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
-    private void creatEditeur(String nomEditeur, String description){
+    /*private void creatEditeur(String nomEditeur, String description){
 
         String editeurApiUrl = "http://editeurs:8080/editeurs";
 
@@ -75,7 +75,7 @@ public class JeuxController {
         editeurRequest.setNom(nomEditeur);
 
         restTemplate.postForEntity(editeurApiUrl,editeurRequest, Void.class);
-    }
+    }*/
 
     @GetMapping("/{JeuxId}")
     @Operation(
@@ -121,6 +121,22 @@ public class JeuxController {
         final JeuxResponse response = jeuxMapper.toResponse(jeux);
 
         return ResponseEntity.ok(response);
+    }
+
+    @Operation(
+            summary = "Permet d'obtenir l'ensemble des éditeurs présent dans l'autra API",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Response in case of success",
+                            content = @Content(mediaType = "application/json", schema = @Schema(allOf = EditeurResponse.class))
+                    ),
+            }
+    )
+    @GetMapping("/jeux-editeurs")
+    public  ResponseEntity<String>getAllEditeur(){
+
+       return jeuService.getAllEdi();
     }
 
 }

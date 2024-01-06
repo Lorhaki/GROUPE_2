@@ -34,8 +34,8 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Tag(
-        name = "Editeurs controller",
-        description = "API to manage Editeur"
+        name = "Editeurs CONTROLLER",
+        description = "API pour manage les éditeurs"
 )
 public class EditeurController {
     private final EditeurService editeurService;
@@ -76,17 +76,17 @@ public class EditeurController {
     /*GET*/
     @GetMapping("/{editeurId}")
     @Operation(
-            summary = "Get an equipment by id",
-            description = "Get the equipment with the provided id.",
+            summary = "Permet d'obtenir un éditeur par son ID",
+            description = "Obtenir l'éditeur en précisant son ID",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Response in case of success",
+                            description = "L'editeur existe",
                             content = @Content(mediaType = "application/json", schema = @Schema(allOf = EditeurDto.class))
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "No editeur is matching the provided id"
+                            description = "Aucun editeur avec cet ID"
                     )
             }
     )
@@ -106,16 +106,16 @@ public class EditeurController {
     @GetMapping("/byNom/{editeurNom}")
     @Operation(
             summary = "Trouver un éditeur avec son nom",
-            description = "Get the equipment with the provided NOM.",
+            description = "Permet d'obtenir un editeur par l'intermédiaire de son nom.",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Response in case of success",
+                            description = "l'editeur avec ce nom existe",
                             content = @Content(mediaType = "application/json", schema = @Schema(allOf = EditeurDto.class))
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "No editeur is matching the provided NOM"
+                            description = "Aucun editeur ne posséde ce nom"
                     )
             }
     )
@@ -135,12 +135,12 @@ public class EditeurController {
     @PutMapping("/{editeurId}")
     @GetMapping("/{editeurId}")
     @Operation(
-            summary = "Update an editeur by id",
-            description = "Update the editeur with the provided id.",
+            summary = "Metre à jour un editeur avec son id",
+            description = "Permet de changer le nom ou la description d'un éditeur",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Reponse en cas de succés",
+                            description = "L'éditeur à bien été modifié",
                             content = @Content(mediaType = "application/json", schema = @Schema(allOf = EditeurDto.class))
                     ),
                     @ApiResponse(
@@ -150,7 +150,7 @@ public class EditeurController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "No editeur is matching the provided id"
+                            description = "Aucun éditeur ne posééde cet ID"
                     )
             }
     )
@@ -183,7 +183,7 @@ public class EditeurController {
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Aucun id correspondant"
+                            description = "Aucun id correspondant , aucun éditeur supprimé"
                     )
             }
     )
@@ -199,7 +199,7 @@ public class EditeurController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Response in case of success",
+                            description = "Tous les éditeurs sont affichés",
                             content = @Content(mediaType = "application/json", schema = @Schema(allOf = EditeurResponse.class))
                     ),
             }
