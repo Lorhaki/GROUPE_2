@@ -58,6 +58,8 @@ Cette erreur n'est pas dû à l'échec de création d'un nouveau jeu mais à l'�
 Ensuite get/jeux permet d'avoir tous les jeux et get/jeux/jeuxid permet de voir un jeu en utilisant son id.
 Nous pouvons voir avec cela que bien que la création des jeux puissent renvoyer 500, ces jeux sont bien créés.
 
+<b> ! Pour le POST:</b> le post renvoie 500 si l'editeur existe déjà cependant le jeu est bien créé.
+
 ### A changer pour utiliser en local
 Les indications données précédemment permettent de créer des conteneurs pour les deux services avec un conteneur pour la base de données.
 Cependant, il est possible de tester de run les 2 services. Pour cela, il faut tout d'abord lancer une base de donnée MongoDB en docker connecté sur le port 27017. 
